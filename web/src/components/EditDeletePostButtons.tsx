@@ -28,19 +28,9 @@ export const EditDeletePostButtons: React.FC<EditDeletePostButtonsProps> = ({
           icon={<EditIcon />}
           aria-label="edit post"
         />
-      </NextLink>
-      {/* <IconButton
-        onClick={async () => {
-          await deletePost({ id });
-          router.push("/");
-        }}
-        ml="auto"
-        colorScheme="red"
-        icon={<DeleteIcon />}
-        aria-label="delete post"
-      /> */}
+      </NextLink>     
       <ActionAlert
-        func={async () => {
+        onClick={async () => {
           await deletePost({ id });
           router.push("/");
         }}

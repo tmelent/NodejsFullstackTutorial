@@ -15,7 +15,7 @@ interface ActionAlertProps {
   icon: React.ReactElement;
   ariaLabel: string;
   colorScheme: string;
-  func?: any;
+  onClick?: any;
 }
 
 export const ActionAlert: React.FC<ActionAlertProps> = ({
@@ -23,13 +23,13 @@ export const ActionAlert: React.FC<ActionAlertProps> = ({
   icon,
   ariaLabel,
   colorScheme,
-  func,
+  onClick
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = async () => {
     setIsOpen(false);
-    if (func) {
-      await func();
+    if (onClick) {
+      await onClick();
     }
   };
 
