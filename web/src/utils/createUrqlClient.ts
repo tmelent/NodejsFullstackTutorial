@@ -144,19 +144,19 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
-            updateComment: (_result, args, cache, info) => {
+            updateComment: (_result, _args, cache, _info) => {
               invalidateAllComments(cache);
             },
-            deleteComment: (_result, args, cache, info) => {
+            deleteComment: (_result, args, cache, _info) => {
               cache.invalidate({
                 __typename: "Comment",
                 id: (args as DeleteCommentMutationVariables).id,
               });
             },
-            createComment: (_result, args, cache, info) => {
+            createComment: (_result, _args, cache, _info) => {
               invalidateAllComments(cache);
             },
-            voteComment: (_result, args, cache, info) => {
+            voteComment: (_result, args, cache, _info) => {
               const { commentId, value } = args as VoteCommentMutationVariables;
               const data = cache.readFragment(
                 gql`
@@ -185,19 +185,19 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 );
               }
             },
-            createPost: (_result, args, cache, info) => {
+            createPost: (_result, _args, cache, _info) => {
               invalidateAllPosts(cache);
             },
-            updatePost: (_result, args, cache, info) => {
+            updatePost: (_result, _args, cache, _info) => {
               invalidateAllPosts(cache);
             },
-            deletePost: (_result, args, cache, info) => {
+            deletePost: (_result, args, cache, _info) => {
               cache.invalidate({
                 __typename: "Post",
                 id: (args as DeletePostMutationVariables).id,
               });
             },
-            vote: (_result, args, cache, info) => {
+            vote: (_result, args, cache, _info) => {
               const { postId, value } = args as VoteMutationVariables;
               const data = cache.readFragment(
                 gql`
@@ -227,7 +227,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
               }
             },
 
-            logout: (_result, args, cache, info) => {
+            logout: (_result, _args, cache, _info) => {
               betterUpdateQuery<LogoutMutation, MeQuery>(
                 cache,
                 { query: MeDocument },
@@ -235,7 +235,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 () => ({ me: null })
               );
             },
-            login: (_result, args, cache, info) => {
+            login: (_result, _args, cache, _info) => {
               betterUpdateQuery<LoginMutation, MeQuery>(
                 cache,
                 { query: MeDocument },
@@ -251,9 +251,10 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 }
               );
               invalidateAllPosts(cache);
+              invalidateAllComments(cache);
             },
 
-            register: (_result, args, cache, info) => {
+            register: (_result, _args, cache, _info) => {
               betterUpdateQuery<RegisterMutation, MeQuery>(
                 cache,
                 { query: MeDocument },

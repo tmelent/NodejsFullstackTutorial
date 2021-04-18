@@ -1,23 +1,12 @@
-import {
-  Box,
-  Button,
-  Flex,
-
-
-
-  Stack, Text
-} from "@chakra-ui/react";
+import { Button, Flex, Stack } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import React, { useState } from "react";
 import { useCommentsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import { CommentUpvoteSection } from "./CommentUpvoteSection";
-import { EditDeleteCommentButtons } from "./EditDeleteCommentButtons";
-// import { UpvoteSection } from "./UpvoteSection";
+import { CommentBody } from "./CommentBody";
+import { CommentCreateForm } from "./CommentCreateForm";
+import EditCommentForm from "./EditCommentForm";
 
-/*
-TODO: Fix EditDeletePostButtons -> CommentButtons
-*/
 interface CommentSectionProps {
   postId: number;
 }
@@ -28,30 +17,32 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
     postId: postId,
     cursor: null as null | string,
   });
+  const [mode, setMode] = useState({
+    editingId: null as null | number,
+  });
   const [{ data, error, fetching }] = useCommentsQuery({ variables });
-
   if (!fetching && !data) {
     return <div>query failed: {error?.message}</div>;
   }
+
+  const isEditing = (id: number) => id === mode.editingId;
+
   return (
-       
-        <div>
+    <div>
       {!data && fetching ? (
         <div>loading...</div>
       ) : (
         <Stack spacing={8}>
+          <CommentCreateForm postId={postId} />
           {data!.comments.comments.map((c) =>
-            !c ? null : (
-              <Flex key={c.id} alignItems="center" p={7} shadow="md" borderWidth="1px">
-               <CommentUpvoteSection comment={c} />
-                <Box>
-                  <strong>{c.author.username}</strong>
-                  <Text mt={4}>{c.text}</Text>
-                </Box>
-                <Box ml="auto">
-                  <EditDeleteCommentButtons id={c.id} authorId={c.author.id} />
-                </Box>
-              </Flex>
+            !c ? null : isEditing(c.id) ? (
+              <EditCommentForm
+                setMode={setMode}
+                key={`editing-comment-${c.id}`}
+                commentId={c.id}
+              />
+            ) : (
+              <CommentBody key={`comment-${c.id}`} c={c} setMode={setMode} />
             )
           )}
         </Stack>
@@ -80,6 +71,4 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(
-  CommentSection as any
-);
+export default withUrqlClient(createUrqlClient)(CommentSection as any);

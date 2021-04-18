@@ -57,16 +57,16 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     <Flex zIndex={1} position="sticky" top={0} bg="tan" p={4}>
       <Flex flex={1} m="auto" maxW={800} align="center">
         <NextLink href="/">
-          <Link>
-            <Button
+          
+            <Link            
               onClick={() => {
                 router.push("/");
               }}              
-              variant="link"
+              
             >
               FSTut
-            </Button>
-          </Link>
+            </Link>
+          
         </NextLink>
         <Box ml="auto">{body}</Box>
       </Flex>

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Stack } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import React from "react";
 import CommentSection from "../../components/CommentSection";
@@ -48,8 +48,11 @@ const Post = ({}) => {
         </Flex>       
 
         <Box mt={5} ml={2}>{data.post.text}</Box>
+      
       </Box>
-      <Heading mt={8} ml={10} as="h2" size="lg" >Comments</Heading>
+      <Divider mt={8}/>
+      <Heading mt={8} ml={0} as="h2" size="lg" >Comments</Heading>
+      <Divider mt={8} />
       <Box mt={8}><CommentSection pageProps={null} postId={intId} /></Box>
     </Layout>
   );

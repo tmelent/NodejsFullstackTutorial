@@ -405,6 +405,19 @@ export type VoteCommentMutation = (
   & Pick<Mutation, 'voteComment'>
 );
 
+export type CommentQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type CommentQuery = (
+  { __typename?: 'Query' }
+  & { comment?: Maybe<(
+    { __typename?: 'Comment' }
+    & CommentFragmentFragment
+  )> }
+);
+
 export type CommentsQueryVariables = Exact<{
   limit: Scalars['Int'];
   cursor?: Maybe<Scalars['String']>;
@@ -664,6 +677,17 @@ export const VoteCommentDocument = gql`
 
 export function useVoteCommentMutation() {
   return Urql.useMutation<VoteCommentMutation, VoteCommentMutationVariables>(VoteCommentDocument);
+};
+export const CommentDocument = gql`
+    query comment($id: Int!) {
+  comment(id: $id) {
+    ...CommentFragment
+  }
+}
+    ${CommentFragmentFragmentDoc}`;
+
+export function useCommentQuery(options: Omit<Urql.UseQueryArgs<CommentQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<CommentQuery>({ query: CommentDocument, ...options });
 };
 export const CommentsDocument = gql`
     query comments($limit: Int!, $cursor: String, $postId: Int!) {
