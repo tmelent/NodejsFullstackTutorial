@@ -1,8 +1,11 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import React from "react";
+import CommentSection from "../../components/CommentSection";
 import { EditDeletePostButtons } from "../../components/EditDeletePostButtons";
 import { Layout } from "../../components/Layout";
+import { UpvoteSection } from "../../components/UpvoteSection";
+import { PostSnippetFragment } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useGetIntId } from "../../utils/useGetIntId";
 import { useGetPostFromUrl } from "../../utils/useGetPostFromUrl";
@@ -30,13 +33,24 @@ const Post = ({}) => {
 
   return (
     <Layout>
-      <Flex>
-        <Heading mb={4}>{data.post.title}</Heading>
-        <Box ml="auto">
-          <EditDeletePostButtons id={intId} creatorId={data.post.creator.id} />
-        </Box>
-      </Flex>
-      {data.post.text}
+      <Box p={8} shadow="md" borderWidth="1px">
+        <Flex alignItems="center">
+        <UpvoteSection post={data.post as any} />
+        <Box mt={2}>
+          <Heading>{data.post.title}</Heading>
+          posted by {data.post.creator.username}</Box>
+          <Box ml="auto">
+            <EditDeletePostButtons
+              id={intId}
+              creatorId={data.post.creator.id}
+            />
+          </Box>
+        </Flex>       
+
+        <Box mt={5} ml={2}>{data.post.text}</Box>
+      </Box>
+      <Heading mt={8} ml={10} as="h2" size="lg" >Comments</Heading>
+      <Box mt={8}><CommentSection pageProps={null} postId={intId} /></Box>
     </Layout>
   );
 };

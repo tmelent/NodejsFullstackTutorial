@@ -12,12 +12,19 @@ import { COOKIE_NAME, __prod__ } from "./constants";
 import { Post } from "./entities/Post";
 import { Upvote } from "./entities/Upvote";
 import { User } from "./entities/User";
+import { Comment } from "./entities/Comment";
 import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
 import { UserResolver } from "./resolvers/user";
 import { MyContext } from "./types";
+import { createUpvoteLoader } from "./utils/createUpvoteLoader";
+import { createUserLoader } from "./utils/createUserLoader";
+import { CommentUpvote } from "./entities/CommentUpvote";
+import { createCommentUpvoteLoader } from "./utils/createCommentUpvoteLoader";
+import { CommentResolver } from "./resolvers/comment";
 
 const main = async () => {
+  
   const conn = await createConnection({
     type: "postgres",
     database: "fstut2",
@@ -26,10 +33,11 @@ const main = async () => {
     logging: true,
     synchronize: true,
     migrations: [path.join(__dirname, "./migrations/*")],
-    entities: [Post, User, Upvote],
+    entities: [Post, User, Upvote, Comment, CommentUpvote],
   });
   await conn.runMigrations();
-  //await Post.delete({});
+  
+  
   const app = express();
 
   const RedisStore = connectRedis(session);
@@ -62,13 +70,16 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, PostResolver, UserResolver],
+      resolvers: [HelloResolver, PostResolver, UserResolver, CommentResolver],
       validate: false,
     }),
     context: ({ req, res }): MyContext => ({
       req,
       res,
       redis,
+      userLoader: createUserLoader(),
+      upvoteLoader: createUpvoteLoader(),
+      commentUpvoteLoader: createCommentUpvoteLoader()
     }),
   });
 

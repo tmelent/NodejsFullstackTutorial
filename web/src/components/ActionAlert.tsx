@@ -26,9 +26,9 @@ export const ActionAlert: React.FC<ActionAlertProps> = ({
   onClick
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const onClose = async () => {
+  const onClose = async (value?: boolean) => {
     setIsOpen(false);
-    if (onClick) {
+    if (onClick && value) {
       await onClick();
     }
   };
@@ -60,10 +60,10 @@ export const ActionAlert: React.FC<ActionAlertProps> = ({
               Are you sure? You can't undo this action afterwards.
             </AlertDialogBody>
             <AlertDialogFooter>
-              <Button ref={cancelRef as any} onClick={onClose}>
+              <Button ref={cancelRef as any} onClick={() => onClose(false)}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
+              <Button colorScheme="red" onClick={() => onClose(true)} ml={3}>
                 Confirm
               </Button>
             </AlertDialogFooter>

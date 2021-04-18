@@ -9,20 +9,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Upvote } from "./Upvote";
+import { Post } from "./Post";
+import { CommentUpvote } from "./CommentUpvote";
 import { User } from "./User";
-import {Comment} from './Comment';
 
 @ObjectType()
 @Entity()
-export class Post extends BaseEntity {
+export class Comment extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Field()
   @Column()
-  creatorId: number;
+  authorId!: number;
 
   @Field()
   @Column()
@@ -43,17 +43,25 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Field()
+  @Field(() => Boolean)
   @Column()
-  title!: string;
+  isOP: boolean;
 
-  @OneToMany(() => Comment, (comment) => comment.post)
-  comments: Comment[]
+  @Field()
+  @Column({ type: "int", default: 0 })
+  isReplyTo: number;
+
+  @Field(() => Int)
+  @Column()
+  postId!: number;
 
   @Field()
   @ManyToOne(() => User, (user) => user.posts)
-  creator: User;
+  author: User;
 
-  @OneToMany(() => Upvote, (upvote) => upvote.post)
-  upvotes: Upvote[];
+  @ManyToOne(() => Post, (post) => post.comments)
+  post: Post[];
+
+  @OneToMany(() => CommentUpvote, (commentUpvote) => commentUpvote.comment)
+  commentUpvotes: CommentUpvote[];
 }
