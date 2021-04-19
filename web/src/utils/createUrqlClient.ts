@@ -5,7 +5,7 @@ import {
   gql,
   stringifyVariables,
 } from "@urql/core";
-import { cacheExchange, Cache, Resolver } from "@urql/exchange-graphcache";
+import { Cache, cacheExchange, Resolver } from "@urql/exchange-graphcache";
 import Router from "next/router";
 import { pipe, tap } from "wonka";
 import {
@@ -49,6 +49,7 @@ const cursorPostsPagination = (): Resolver => {
     const results: string[] = [];
     fieldInfos.forEach((fi) => {
       const key = cache.resolve(entityKey, fi.fieldKey) as string;
+
       const data = cache.resolve(key, "posts") as string[];
       const _hasMore = cache.resolve(key, "hasMore");
       if (!_hasMore) {
@@ -69,7 +70,12 @@ const cursorCommentsPagination = (): Resolver => {
   return (_parent, fieldArgs, cache, info) => {
     const { parentKey: entityKey, fieldName } = info;
     const allFields = cache.inspectFields(entityKey);
-    const fieldInfos = allFields.filter((info) => info.fieldName === fieldName);
+    const fieldInfos = allFields.filter(
+      (info) =>
+        info.fieldName === fieldName &&
+        info.arguments!.postId ===
+          parseInt(stringifyVariables(fieldArgs.postId))
+    );
     const size = fieldInfos.length;
     if (size === 0) {
       return undefined;
@@ -79,6 +85,7 @@ const cursorCommentsPagination = (): Resolver => {
     info.partial = !isItInTheCache;
     let hasMore = true;
     const results: string[] = [];
+
     fieldInfos.forEach((fi) => {
       const key = cache.resolve(entityKey, fi.fieldKey) as string;
       const data = cache.resolve(key, "comments") as string[];
@@ -105,13 +112,13 @@ function invalidateAllPosts(cache: Cache) {
   });
 }
 
-function invalidateAllComments(cache: Cache) {
+const invalidateAllComments = (cache: Cache) => {
   const allFields = cache.inspectFields("Query");
   const fieldInfos = allFields.filter((info) => info.fieldName === "comments");
   fieldInfos.forEach((fi) => {
     cache.invalidate("Query", "comments", fi.arguments || {});
   });
-}
+};
 
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
   let cookie = "";
@@ -144,7 +151,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
-            updateComment: (_result, _args, cache, _info) => {
+            updateComment: (_result, args, cache, _info) => {
               invalidateAllComments(cache);
             },
             deleteComment: (_result, args, cache, _info) => {
@@ -172,6 +179,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 if (data.voteStatus === value) {
                   return;
                 }
+
                 const newPoints =
                   (data.points as number) + (!data.voteStatus ? 1 : 2) * value;
                 cache.writeFragment(
@@ -199,6 +207,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
             },
             vote: (_result, args, cache, _info) => {
               const { postId, value } = args as VoteMutationVariables;
+              console.log(args);
               const data = cache.readFragment(
                 gql`
                   fragment _ on Post {
@@ -273,7 +282,6 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
           },
         },
       }),
-
       ssrExchange,
       errorExchange,
       fetchExchange,
