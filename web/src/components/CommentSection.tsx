@@ -7,13 +7,15 @@ import { CommentBody } from "./CommentBody";
 import { CommentCreateForm } from "./CommentCreateForm";
 import EditCommentForm from "./EditCommentForm";
 
+
 interface CommentSectionProps {
   postId: number;
+  comment: any;
 }
 
 const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   const [variables, setVariables] = useState({
-    limit: 15,
+    limit: 5,
     postId: postId,
     cursor: null as null | string,
   });

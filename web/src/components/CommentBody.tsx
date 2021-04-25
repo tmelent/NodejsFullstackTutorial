@@ -2,6 +2,7 @@ import { StarIcon } from "@chakra-ui/icons";
 import { Text, Flex, Box } from "@chakra-ui/react";
 import React from "react";
 import { CommentFragmentFragment } from "../generated/graphql";
+import isUpdated from "../utils/isUpdated";
 import parseDate from "../utils/parseDate";
 import { CommentUpvoteSection } from "./CommentUpvoteSection";
 import { EditDeleteCommentButtons } from "./EditDeleteCommentButtons";
@@ -24,12 +25,9 @@ export const CommentBody: React.FC<CommentBodyProps> = ({ c, setMode }) => {
         <Flex alignItems="center">
           <strong>{c.author.username}</strong>
           {c.isOP ? <StarIcon ml={2} /> : null}
-        </Flex>
-        {c.createdAt !== c.updatedAt ? (
-          <Text ml="auto">edited at {parseDate(c.updatedAt)}</Text>
-        ) : (
+        </Flex>        
           <Text>posted at {parseDate(c.createdAt)}</Text>
-        )}
+          {isUpdated(c) ? <Text fontSize='sm' color='gray.400'>updated at {parseDate(c.updatedAt)}</Text>: null}
         <Text mt={4}>{c.text}</Text>
       </Box>
       <Box ml="auto">

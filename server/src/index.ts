@@ -24,7 +24,6 @@ import { createCommentUpvoteLoader } from "./utils/createCommentUpvoteLoader";
 import { CommentResolver } from "./resolvers/comment";
 
 const main = async () => {
-  
   const conn = await createConnection({
     type: "postgres",
     database: "fstut2",
@@ -36,8 +35,7 @@ const main = async () => {
     entities: [Post, User, Upvote, Comment, CommentUpvote],
   });
   await conn.runMigrations();
-  
-  
+
   const app = express();
 
   const RedisStore = connectRedis(session);
@@ -79,7 +77,7 @@ const main = async () => {
       redis,
       userLoader: createUserLoader(),
       upvoteLoader: createUpvoteLoader(),
-      commentUpvoteLoader: createCommentUpvoteLoader()
+      commentUpvoteLoader: createCommentUpvoteLoader(),
     }),
   });
 

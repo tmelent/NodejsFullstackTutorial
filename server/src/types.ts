@@ -12,5 +12,5 @@ export type MyContext = {
   res: Response;
   userLoader: ReturnType<typeof createUserLoader>;
   upvoteLoader: ReturnType<typeof createUpvoteLoader>;
-  commentUpvoteLoader: ReturnType<typeof createCommentUpvoteLoader>;
+  commentUpvoteLoader: ReturnType<typeof createCommentUpvoteLoader>;  
 };

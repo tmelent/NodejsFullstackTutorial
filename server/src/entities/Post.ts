@@ -46,7 +46,7 @@ export class Post extends BaseEntity {
   @Field()
   @Column()
   title!: string;
-
+  
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[]
 

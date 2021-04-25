@@ -95,7 +95,6 @@ const cursorCommentsPagination = (): Resolver => {
       }
       results.push(...data);
     });
-
     return {
       __typename: "PaginatedComments",
       hasMore,

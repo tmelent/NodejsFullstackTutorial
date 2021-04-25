@@ -144,13 +144,12 @@ export class CommentResolver {
       `
     select c.*
     from comment c
-    ${cursor ? `where c."createdAt" < $3` : ""} 
-    where c."postId"=$2
+    ${cursor ? `where c."createdAt" < $3 and` : "where"} c."postId"=$2
     order by c."createdAt" DESC
     limit $1
     `,
       replacements
-    );
+    );    
     return {
       comments: comments.slice(0, realLimit),
       hasMore: comments.length === realLimitPlusOne,

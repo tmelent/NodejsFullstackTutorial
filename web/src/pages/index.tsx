@@ -15,6 +15,8 @@ import { Layout } from "../components/Layout";
 import { UpvoteSection } from "../components/UpvoteSection";
 import { usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
+import isUpdated from "../utils/isUpdated";
+import parseDate from "../utils/parseDate";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -39,6 +41,7 @@ const Index = () => {
       ) : (
         <Stack spacing={8}>
           {data!.posts.posts.map((p) =>
+          
             !p ? null : (
               <Flex key={p.id} p={5} shadow="md" borderWidth="1px">
                 <UpvoteSection post={p} />
@@ -48,14 +51,21 @@ const Index = () => {
                       <Heading fontSize="xl">{p.title}</Heading>
                     </Link>
                   </NextLink>
-                  posted by {p.creator.username}
-                  <Text mt={4}>{p.textSnippet}</Text>
+                  <Text>posted by {p.creator.username} at{" "}
+                  {parseDate(p.createdAt)}
+                  </Text>
+                  {isUpdated(p) ? <Text fontSize='sm' color='gray.400'>updated at {parseDate(p.updatedAt)}</Text>: null} 
+                    
+                     
+                  <Text mt={4}>{p.textSnippet} </Text>
                 </Box>
                 <Box ml="auto">
                   <EditDeletePostButtons id={p.id} creatorId={p.creator.id} />
                 </Box>
               </Flex>
+              
             )
+            
           )}
         </Stack>
       )}
