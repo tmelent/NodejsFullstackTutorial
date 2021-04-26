@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "./NavBar";
+import {NavBar} from "./nextDynamicComponents/dynamicNavBar";
 import { Wrapper, WrapperVariant } from "./Wrapper";
 
 interface LayoutProps {

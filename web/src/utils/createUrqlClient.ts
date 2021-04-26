@@ -33,6 +33,8 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
   );
 };
 
+// 
+
 const cursorPostsPagination = (): Resolver => {
   return (_parent, fieldArgs, cache, info) => {
     const { parentKey: entityKey, fieldName } = info;
@@ -69,7 +71,7 @@ const cursorPostsPagination = (): Resolver => {
 const cursorCommentsPagination = (): Resolver => {
   return (_parent, fieldArgs, cache, info) => {
     const { parentKey: entityKey, fieldName } = info;
-    const allFields = cache.inspectFields(entityKey);
+    const allFields = cache.inspectFields(entityKey);   
     const fieldInfos = allFields.filter(
       (info) =>
         info.fieldName === fieldName &&
@@ -145,7 +147,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         resolvers: {
           Query: {
             posts: cursorPostsPagination(),
-            comments: cursorCommentsPagination(),
+            comments: cursorCommentsPagination(),            
           },
         },
         updates: {
@@ -205,8 +207,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
               });
             },
             vote: (_result, args, cache, _info) => {
-              const { postId, value } = args as VoteMutationVariables;
-              console.log(args);
+              const { postId, value } = args as VoteMutationVariables;              
               const data = cache.readFragment(
                 gql`
                   fragment _ on Post {
