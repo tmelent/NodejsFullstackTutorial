@@ -1,0 +1,12 @@
+.navBar {
+  @include bg($navBarColor);
+}
+
+.logo {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 36px;
+  &:hover{
+    cursor: pointer;
+}
+
+}

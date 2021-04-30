@@ -64,6 +64,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
             isLoading={fetching}
             m="auto"
             my={8}
+            className="submitBtn"
           >
             load more
           </Button>

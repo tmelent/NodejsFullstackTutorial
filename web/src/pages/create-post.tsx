@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
@@ -9,12 +9,12 @@ import { useCreatePostMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useIsAuth } from "../utils/useIsAuth";
 
-const CreatePost: React.FC<{}> = ({}) => {  
-  const router = useRouter();  
+const CreatePost: React.FC<{}> = ({}) => {
+  const router = useRouter();
   useIsAuth();
   const [, createPost] = useCreatePostMutation();
   return (
-    <Layout variant="small">
+    <Layout variant="regular">
       <Formik
         initialValues={{ title: "", text: "" }}
         onSubmit={async (values) => {
@@ -24,26 +24,28 @@ const CreatePost: React.FC<{}> = ({}) => {
           }
         }}
       >
-      
         {({ isSubmitting }) => (
-          <Form>
-            <InputField name="title" placeholder="title" label="Title" />
-            <Box mt={4} />
-            <InputField
-              name="text"
-              placeholder="text..."
-              textarea={true}
-              label="Body"
-            />
-            <Button
-              mt={4}
-              type="submit"
-              isLoading={isSubmitting}
-              colorScheme="teal"
-            >
-              Submit
-            </Button>
-          </Form>
+          <>
+            <Heading mb={8}>Create post</Heading>
+            <Form>
+              <InputField name="title" placeholder="title" label="Title" />
+              <Box mt={4} />
+              <InputField
+                name="text"
+                placeholder="text..."
+                textarea={true}
+                label="Body"
+              />
+              <Button
+                mt={4}
+                type="submit"
+                isLoading={isSubmitting}
+                className="submitBtn"
+              >
+                Submit
+              </Button>
+            </Form>
+          </>
         )}
       </Formik>
     </Layout>

@@ -1,0 +1,33 @@
+.editBtn {
+  @include bg($editBtnColor);
+  @include hoverChangeBG($editBtnColor);
+}
+
+.deleteBtn {
+  @include bg($removeBtnColor);
+  @include hoverChangeBG($removeBtnColor);
+}
+
+.createPostBtn {
+  @include hoverChangeBG($createBtnColor, 15%);
+  @include bg($createBtnColor);
+}
+
+.upvoteBtn {
+  @include bg($upvoteBtnColor);
+  
+}
+
+.downvoteBtn {
+  @include bg($downvoteBtnColor);
+}
+
+.voteBtn {
+  @include bg($editBtnColor);
+  @include hoverChangeBG($editBtnColor, 15%);
+}
+
+.submitBtn{
+  @include bg($submitBtnColor);
+  @include hoverChangeBG($submitBtnColor, 15%);
+}

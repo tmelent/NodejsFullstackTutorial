@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React from "react";
 import {
@@ -44,14 +44,17 @@ const EditCommentForm: React.FC<EditCommentFormProps> = ({
             textarea={true}
             label="Edit your comment"
           />
+          <Flex>
           <Button
             mt={4}
             type="submit"
             isLoading={isSubmitting}
-            colorScheme="teal"
+            className="submitBtn"
+            ml='auto'
           >
             Edit comment
           </Button>
+          </Flex>
         </Form>
       )}
     </Formik>
