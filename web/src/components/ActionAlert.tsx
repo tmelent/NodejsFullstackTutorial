@@ -14,7 +14,7 @@ interface ActionAlertProps {
   text: string;
   icon: React.ReactElement;
   ariaLabel: string;
-  colorScheme: string;
+  className: string;
   onClick?: any;
 }
 
@@ -22,7 +22,7 @@ export const ActionAlert: React.FC<ActionAlertProps> = ({
   text,
   icon,
   ariaLabel,
-  colorScheme,
+  className,
   onClick
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ export const ActionAlert: React.FC<ActionAlertProps> = ({
         onClick={() => {
           setIsOpen(true);
         }}
-        colorScheme={colorScheme}
+        className={className}
         icon={icon}
         aria-label={ariaLabel}
       />
@@ -63,7 +63,7 @@ export const ActionAlert: React.FC<ActionAlertProps> = ({
               <Button ref={cancelRef as any} onClick={() => onClose(false)}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={() => onClose(true)} ml={3}>
+              <Button className="deleteBtn" onClick={() => onClose(true)} ml={3}>
                 Confirm
               </Button>
             </AlertDialogFooter>

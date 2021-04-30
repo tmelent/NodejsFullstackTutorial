@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Ubuntu&display=swap");
+.navBar {
+  background: #c75649 !important;
+}
+
+.logo {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 36px;
+}
+.logo:hover {
+  cursor: pointer;
+}
+
+body {
+  background: #05161a !important;
+  font-family: "Nunito", sans-serif !important;
+}
+
+.editBtn {
+  background: #666370 !important;
+}
+.editBtn:hover {
+  background: #35333a !important;
+}
+
+.deleteBtn {
+  background: #b83f32 !important;
+}
+.deleteBtn:hover {
+  background: #68241c !important;
+}
+
+.createPostBtn {
+  background: #b83f32 !important;
+}
+.createPostBtn:hover {
+  background: #7c2a22 !important;
+}
+
+.upvoteBtn {
+  background: #97BF04 !important;
+}
+
+.downvoteBtn {
+  background: #b83f32 !important;
+}
+
+.voteBtn {
+  background: #666370 !important;
+}
+.voteBtn:hover {
+  background: #413f47 !important;
+}
+
+.submitBtn {
+  background: #b83f32 !important;
+}
+.submitBtn:hover {
+  background: #7c2a22 !important;
+}
+
+.contentFrame {
+  background: #393c44 !important;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #ffffff !important;
+  opacity: 65%;
+}
+
+textarea:-moz-placeholder {
+  /* Firefox 18- */
+  color: #ffffff !important;
+  opacity: 65%;
+}
+
+textarea::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #ffffff !important;
+  opacity: 65%;
+}
+
+textarea:-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 65%;
+}
+
+textarea::placeholder {
+  color: #ffffff !important;
+  opacity: 65%;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.navbar-text {
+  font-size: 22px !important;
+  font-family: "Ubuntu", sans-serif;
+}
+
+/*# sourceMappingURL=index.css.map */

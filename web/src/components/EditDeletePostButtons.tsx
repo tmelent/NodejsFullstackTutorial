@@ -27,6 +27,7 @@ export const EditDeletePostButtons: React.FC<EditDeletePostButtonsProps> = ({
           mr={4}
           icon={<EditIcon />}
           aria-label="edit post"
+          className="editBtn"
         />
       </NextLink>     
       <ActionAlert
@@ -35,7 +36,7 @@ export const EditDeletePostButtons: React.FC<EditDeletePostButtonsProps> = ({
           router.push("/");
         }}
         ariaLabel="Delete post"
-        colorScheme="red"
+        className="deleteBtn"
         icon={<DeleteIcon />}
         text="Delete post"
       />

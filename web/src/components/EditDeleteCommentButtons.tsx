@@ -23,7 +23,8 @@ export const EditDeleteCommentButtons: React.FC<EditDeleteCommentButtonsProps> =
     <Flex>
       <IconButton
         onClick={() => setMode({ editingId: id })}
-        as={Link}
+        as={Link}        
+        className="editBtn"
         mr={4}
         icon={<EditIcon />}
         aria-label="edit comment"
@@ -33,7 +34,7 @@ export const EditDeleteCommentButtons: React.FC<EditDeleteCommentButtonsProps> =
           await deleteComment({ id });
         }}
         ariaLabel="Delete comment"
-        colorScheme="red"
+        className="deleteBtn"
         icon={<DeleteIcon />}
         text="Delete comment"
       />

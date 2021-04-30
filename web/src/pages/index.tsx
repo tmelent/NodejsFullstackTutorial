@@ -4,6 +4,7 @@ import {
   Flex,
   Heading,
   Link,
+  Skeleton,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -23,28 +24,36 @@ const Index = () => {
     limit: 15,
     cursor: null as null | string,
   });
-  
+
   const [{ data, error, fetching }] = usePostsQuery({
     variables,
   });
-  
+
   if (!fetching && !data) {
     return <div>query failed: {error?.message}</div>;
   }
   return (
     <Layout>
-      <Flex>
+      <Flex justifyItems="center">
         <Heading mb={8}>Feed</Heading>
+        <NextLink href="/create-post">
+          <Button ml='auto' className="createPostBtn">
+            Create post
+          </Button>
+        </NextLink>
       </Flex>
 
       {!data && fetching ? (
-        <div>loading...</div>
+        <Stack spacing={8} p={8}  shadow="md" borderWidth="1px">
+          <Skeleton mb={6} height="30px" width="350px" />
+          <Skeleton mb={4} height="20px" width="450px" />          
+          <Skeleton mb={4} height="20px" />
+        </Stack>        
       ) : (
         <Stack spacing={8}>
           {data!.posts.posts.map((p) =>
-          
             !p ? null : (
-              <Flex key={p.id} p={5} shadow="md" borderWidth="1px">
+              <Flex key={p.id} p={5} className="contentFrame" >
                 <UpvoteSection post={p} />
                 <Box>
                   <NextLink href="/post/[id]" as={`/post/${p.id}`}>
@@ -52,21 +61,22 @@ const Index = () => {
                       <Heading fontSize="xl">{p.title}</Heading>
                     </Link>
                   </NextLink>
-                  <Text>posted by {p.creator.username} at{" "}
-                  {parseDate(p.createdAt)}
+                  <Text>
+                    posted by {p.creator.username} at {parseDate(p.createdAt)}
                   </Text>
-                  {isUpdated(p) ? <Text fontSize='sm' color='gray.400'>updated at {parseDate(p.updatedAt)}</Text>: null} 
-                    
-                     
+                  {isUpdated(p) ? (
+                    <Text fontSize="sm" color="gray.400">
+                      updated at {parseDate(p.updatedAt)}
+                    </Text>
+                  ) : null}
+
                   <Text mt={4}>{p.textSnippet} </Text>
                 </Box>
                 <Box ml="auto">
                   <EditDeletePostButtons id={p.id} creatorId={p.creator.id} />
                 </Box>
               </Flex>
-              
             )
-            
           )}
         </Stack>
       )}
@@ -82,6 +92,7 @@ const Index = () => {
             isLoading={fetching}
             m="auto"
             my={8}
+            className="submitBtn"
           >
             load more
           </Button>

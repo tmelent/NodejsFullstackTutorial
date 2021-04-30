@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import React from "react";
 import CommentSection from "../../components/CommentSection";
@@ -19,7 +19,12 @@ const Post = ({}) => {
   if (fetching) {
     return (
       <Layout>
-        <div>Loading...</div>
+        <Box p={8} shadow="md" borderWidth="1px">
+          <Skeleton mb={6} height="30px" width="350px" />
+          <Skeleton mb={4} height="20px" width="450px" />
+          <Skeleton mb={4} height="20px" />
+          <Skeleton mb={4} height="20px" />
+        </Box>
       </Layout>
     );
   }

@@ -1,5 +1,5 @@
-import { Button } from "@chakra-ui/react";
-import { Formik, Form, useFormik } from "formik";
+import { Button, Flex } from "@chakra-ui/react";
+import { Form, Formik } from "formik";
 import React from "react";
 import { useCreateCommentMutation } from "../generated/graphql";
 import { useIsAuth } from "../utils/useIsAuth";
@@ -35,14 +35,17 @@ export const CommentCreateForm: React.FC<CommentCreateFormProps> = ({
             textarea={true}
             label="Write something"
           />
-          <Button
-            mt={4}
-            type="submit"
-            isLoading={isSubmitting}
-            colorScheme="teal"
-          >
-            Submit comment
-          </Button>
+          <Flex>
+            <Button
+              mt={4}
+              type="submit"
+              isLoading={isSubmitting}
+              className="submitBtn"
+              ml='auto'
+            >
+              Submit comment
+            </Button>
+          </Flex>
         </Form>
       )}
     </Formik>

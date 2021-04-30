@@ -1,0 +1,21 @@
+@mixin bg($bgColor) {
+  background: $bgColor !important;
+}
+
+@mixin bgNotImportant($bgColor){
+  background: $bgColor;
+}
+
+@mixin hoverChangeBG($color, $darkenPercent: 20%) {
+  &:hover {
+    background: darken($color, $darkenPercent) !important;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Ubuntu&display=swap');
+@import "colors";
+@import "navBar";
+@import "body";
+@import "iconButtons";
+@import "frames";
+@import "text";
