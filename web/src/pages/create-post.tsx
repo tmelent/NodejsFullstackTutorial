@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
+import { SlateWindow } from "../components/slate";
 import { useCreatePostMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useIsAuth } from "../utils/useIsAuth";
@@ -15,6 +16,7 @@ const CreatePost: React.FC<{}> = ({}) => {
   const [, createPost] = useCreatePostMutation();
   return (
     <Layout variant="regular">
+      <SlateWindow />
       <Formik
         initialValues={{ title: "", text: "" }}
         onSubmit={async (values) => {

@@ -35,7 +35,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         <Box mr={6} className="navbar-text">
           {data.me.username}
         </Box>
-        <Link
+        <Link          
           className="navbar-text"
           onClick={async () => {
             await logout();

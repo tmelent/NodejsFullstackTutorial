@@ -11,6 +11,7 @@ import parseDate from "../../utils/parseDate";
 import { useGetIntId } from "../../utils/useGetIntId";
 import { useGetPostFromUrl } from "../../utils/useGetPostFromUrl";
 import isUpdated from "../../utils/isUpdated";
+import { SlateWindow } from "../../components/slate";
 const Post = ({}) => {
   const intId = useGetIntId();
 
@@ -38,7 +39,7 @@ const Post = ({}) => {
   }
 
   return (
-    <Layout>
+    <Layout>      
       <Box p={8} shadow="md" borderWidth="1px">
         <Flex alignItems="center">
           <UpvoteSection post={data.post as any} />
